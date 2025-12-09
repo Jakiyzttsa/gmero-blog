@@ -6,5 +6,5 @@ draft = false
 
 ## 联系我
 
-- 邮箱: <gmerocom@gmail.com>
+- 邮箱: <me@sxl.cc>
 - GitHub: [https://github.com/g-mero](https://github.com/g-mero)

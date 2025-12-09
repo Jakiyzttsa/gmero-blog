@@ -1,6 +1,9 @@
 {
-    "[html]": {
+    "[GoHTML]": {
         "editor.formatOnSave": false
     },
-    "html.autoClosingTags": true
+    "html.autoClosingTags": true,
+    "files.associations": {
+        "*.html": "GoHTML"
+    }
 }

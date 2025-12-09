@@ -1,1 +1,26 @@
 <meta name="hugo-theme" content="hugo-theme-mori" />
+
+{{- with resources.Get "css/custom.css" }}
+  {{- $css := . | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" crossorigin="anonymous">
+{{- end }}
+
+<script>
+{{- with resources.Get "css/giscus.css" }}
+  {{- $css := . | minify | fingerprint }}
+window.giscusCssLight = "{{ $css.Permalink  }}";
+{{- end}}
+{{- with resources.Get "css/giscus-dark.css" }}
+  {{- $css := . | minify | fingerprint }}
+window.giscusCssDark = "{{ $css.Permalink }}";
+{{- end}}
+</script>
+
+
+{{- with resources.Get "js/custom.js" }}
+  {{- $js := . | minify }}
+  {{- with $js  | fingerprint }}
+    <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" defer></script>
+  {{- end }}
+{{- end }}
+

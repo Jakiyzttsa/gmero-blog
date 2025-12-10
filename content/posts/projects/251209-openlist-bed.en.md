@@ -1,6 +1,5 @@
 ---
 date: 2025-12-09T00:00:00+08:00
-draft: true
 title: Build a Simple Image Hosting Service with OpenList
 tags:
   - OpenList

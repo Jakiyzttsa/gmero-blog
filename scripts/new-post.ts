@@ -2,34 +2,27 @@ import { execSync } from "child_process";
 
 interface NewPostOptions {
   title: string;
-  category: string;
 }
 
 function parseArgs(): NewPostOptions {
   const args = process.argv.slice(2);
 
   let title = "";
-  let category = "";
 
   for (let i = 0; i < args.length; i++) {
     if (args[i] === "--title" || args[i] === "-t") {
       title = args[i + 1];
       i++;
-    } else if (args[i] === "--category" || args[i] === "-c") {
-      category = args[i + 1];
-      i++;
     }
   }
 
-  if (!title || !category) {
-    console.error(
-      'Usage: pnpm new-post --title "Your Title" --category "category-name"'
-    );
-    console.error('  or: pnpm new-post -t "Your Title" -c "category-name"');
+  if (!title) {
+    console.error('Usage: pnpm new-post --title "Your Title"');
+    console.error('  or: pnpm new-post -t "Your Title"');
     process.exit(1);
   }
 
-  return { title, category };
+  return { title };
 }
 
 function generateSlug(title: string): string {
@@ -41,25 +34,24 @@ function generateSlug(title: string): string {
     .trim();
 }
 
-function generateDatePrefix(): string {
+function generateDateParts(): { year: string; month: string; day: string } {
   const now = new Date();
-  const year = String(now.getFullYear()).slice(2); // Get last 2 digits of year
+  const year = String(now.getFullYear());
   const month = String(now.getMonth() + 1).padStart(2, "0");
   const day = String(now.getDate()).padStart(2, "0");
-  return `${year}${month}${day}`;
+  return { year, month, day };
 }
 
 function main() {
-  const { title, category } = parseArgs();
+  const { title } = parseArgs();
 
   const slug = generateSlug(title);
-  const datePrefix = generateDatePrefix();
-  const filename = `${datePrefix}-${slug}.md`;
-  const filePath = `content/posts/${category}/${filename}`;
+  const { year, month, day } = generateDateParts();
+  const filename = `${month}${day}-${slug}.md`;
+  const filePath = `content/posts/${year}/${filename}`;
 
   console.log(`Creating new post: ${filePath}`);
   console.log(`Title: ${title}`);
-  console.log(`Category: ${category}`);
 
   try {
     execSync(`hugo new content ${filePath}`, { stdio: "inherit" });

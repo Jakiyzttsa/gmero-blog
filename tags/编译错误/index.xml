@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>编译错误 on Gmero</title><link>https://www.gmero.com/tags/%E7%BC%96%E8%AF%91%E9%94%99%E8%AF%AF/</link><description>Recent content in 编译错误 on Gmero</description><generator>Hugo</generator><language>zh-CN</language><copyright>© 2025 Gmero. All rights reserved.</copyright><lastBuildDate>Thu, 05 Feb 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://www.gmero.com/tags/%E7%BC%96%E8%AF%91%E9%94%99%E8%AF%AF/index.xml" rel="self" type="application/rss+xml"/><item><title>一次修复 CMake 编译器错误的经历</title><link>https://www.gmero.com/posts/2026/0205-fix-cmake-compiler-error/</link><pubDate>Thu, 05 Feb 2026 00:00:00 +0000</pubDate><guid>https://www.gmero.com/posts/2026/0205-fix-cmake-compiler-error/</guid><description>&lt;p&gt;记录一次困扰了我接近5个小时, 尝试了各种办法——AI, Bing, Stack Overflow 都没有解决，最后发现是工具没卸载干净导致的，我会把关联的可能修复也贴出来，因为我们所遇到的问题不一定完全一样&lt;/p&gt;
+&lt;h2 id="错误详情"&gt;错误详情&lt;/h2&gt;
+&lt;p&gt;&lt;figure&gt;
+ &lt;img
+ class="my-0 rounded-md lazy-img"
+ alt="error"
+ data-src="https://as.gmero.com/pic/2026/1770282202964_1020x551.png"&gt;&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;报错的关键字：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Detecting C compiler ABI info - failed&lt;/li&gt;
+&lt;li&gt;Check for working C compiler: &amp;hellip; - broken&lt;/li&gt;
+&lt;li&gt;C:\Windows\system32\cmd.exe /C &amp;hellip; 系统找不到指定的路径。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果你同时符合以上三条信息，那么大概率就跟我是同样的问题&lt;/p&gt;
+&lt;p&gt;你如果只符合前面两条可以尝试：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a
+ href="https://blog.csdn.net/qq_63771247/article/details/124151219"
+ target="_blank"
+ &gt;重装 mingw64 &lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;检查 toolchain 配置&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="解决办法"&gt;解决办法&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;一句话：检查注册表 &lt;code&gt;HKEY_LOCAL_MACHINE\Software\Microsoft\Command Processor&lt;/code&gt; 和 &lt;code&gt;HKEY_CURRENT_USER\Software\Microsoft\Command Processor&lt;/code&gt; 是不是有执行无效文件的 AutoRun 项，有就删掉&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;我是因为之前安装过 &lt;code&gt;clink&lt;/code&gt; 又卸载了，但是卸载会有注册表残留需要手动清理，这里之所以会困扰我这么长时间，一方面是因为 ai 的误导，另一方面是因为我命令行一直用的 powershell 然后独立运行 gcc 都没有问题，所以就一直没往这方面想。直到凌晨12点，突然感觉这里的 &lt;code&gt;系统找不到指定的路径&lt;/code&gt; 似曾相识，感觉之前运行其他命令的时候也会突然冒出一句这个，然后孤立测试 &lt;code&gt;C:\Windows\system32\cmd.exe /C &amp;quot;echo 1&amp;quot;&lt;/code&gt; 发现固定会有这个报错，经过搜索就发现了问题所在&lt;/p&gt;</description></item></channel></rss>
